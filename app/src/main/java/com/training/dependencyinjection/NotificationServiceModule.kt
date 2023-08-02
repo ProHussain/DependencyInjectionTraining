@@ -1,12 +1,10 @@
 package com.training.dependencyinjection
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 @Module
-class NotificationServiceModule {
-    @Provides
-    fun getNotificationService(): NotificationService {
-        return EmailService()
-    }
+abstract class NotificationServiceModule {
+    @Binds
+    abstract fun getNotificationService(emailService: EmailService): NotificationService
 }
