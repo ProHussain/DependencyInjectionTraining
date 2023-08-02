@@ -2,13 +2,21 @@ package com.training.dependencyinjection
 
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
+import javax.inject.Named
 
 @Module
-abstract class NotificationServiceModule {
-    @Binds
-    abstract fun getEmailService(emailService: EmailService): NotificationService
+class NotificationServiceModule(private val notificationType: String) {
+    @Named("email")
+    @Provides
+    fun getEmailService(): NotificationService {
+        return EmailService(notificationType)
+    }
 
     @SMSAnnotation
-    @Binds
-    abstract fun getSMSService(smsService: SMSService): NotificationService
+    @Provides
+    fun getSMSService(smsService: SMSService): NotificationService {
+        return smsService
+    }
+
 }

@@ -8,9 +8,9 @@ interface NotificationService {
     fun sendNotification(to: String, message: String)
 }
 
-class EmailService @Inject constructor() : NotificationService {
+class EmailService(private val notificationType: String) : NotificationService {
     override fun sendNotification(to: String, message: String) {
-        Log.i(TAG, "Sending email to $to with message: $message")
+        Log.i(TAG, "Sending email to $to with message: $message and notification type: $notificationType")
     }
 }
 

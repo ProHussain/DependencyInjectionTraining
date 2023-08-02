@@ -18,23 +18,24 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
-     * Training 6
-     * 1. Let's we have a scenario where we need to use both services like send SMS and send Email
-     * 2. How can we use both services with Dagger2?
-     * 3. We can use @Named annotation to differentiate between two services
-     * 4. We can use @Named annotation in consumer and producer (Module) classes
-     * 5. But still there is a problem, we may face typo error while using @Named annotation in case of misspelling
-     * 6. So How can we solve this problem?
-     * 7. We can create our own custom annotation and add Dagger2 @Qualifier @Documented and @Retention annotation to it
-     * 8. We can use our custom annotation in consumer and producer (Module) classes
-     * 9. Let's run our app
+     * Training 7
+     * 1. Let's we have a scenario where we need to create some objects at runtime but Dagger creates all the objects at compile time.
+     * 2. In this case, we need to tell Dagger to create the object at runtime.
+     * 3. To do this, we need to create Module class instead of Dagger creates it for us.
+     * 4. We will pass our value at runtime using the constructor and create other objects with the help of the constructor.
+     * 5. Use Provides annotation to tell Dagger to create the object at runtime.
+     * 6. Remove Abstract keyword from the Module class.
+     * 7. Remove the @Binds annotation from the getEmailService() method.
+     * 8. Run the app and check the logcat.
      */
 
     @Inject
     lateinit var userRegistrationService: UserRegistrationService
 
     private fun training() {
-        val component = DaggerUserRegistrationServiceComponent.builder().build()
+        val component = DaggerUserRegistrationServiceComponent.builder()
+            .notificationServiceModule(NotificationServiceModule("HashMac"))
+            .build()
         component.bindMain(this)
         userRegistrationService.registerUser("alpha@mail.com","12345678")
     }
