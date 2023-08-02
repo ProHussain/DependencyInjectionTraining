@@ -1,9 +1,11 @@
 package com.training.dependencyinjection.training_one
 
 import android.util.Log
+import com.training.dependencyinjection.MainActivity.Companion.TAG
+import javax.inject.Inject
 
-class EmailService {
+class EmailService @Inject constructor() {
     fun sendEmail(email: String, message: String) {
-        Log.i("EmailService", "Sending email to $email with message: $message")
+        Log.i(TAG, "Sending email to $email with message: $message")
     }
 }
