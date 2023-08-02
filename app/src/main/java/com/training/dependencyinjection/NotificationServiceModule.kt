@@ -1,6 +1,5 @@
 package com.training.dependencyinjection
 
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -9,8 +8,11 @@ import javax.inject.Named
 class NotificationServiceModule() {
     @Named("email")
     @Provides
-    fun getEmailService(notificationType: String): NotificationService {
-        return EmailService(notificationType)
+    fun getEmailService(
+        @Named("type") notificationType: String,
+        @Named("sender") sender: String
+    ): NotificationService {
+        return EmailService(notificationType,sender)
     }
 
     @SMSAnnotation

@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var userRegistrationService: UserRegistrationService
 
     private fun training() {
-        val component = DaggerUserRegistrationServiceComponent.factory().create("email")
+        val component = DaggerUserRegistrationServiceComponent.factory().create("Push","HashMac")
         component.bindMain(this)
         userRegistrationService.registerUser("alpha@mail.com","12345678")
     }

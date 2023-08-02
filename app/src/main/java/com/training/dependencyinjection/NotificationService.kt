@@ -8,9 +8,9 @@ interface NotificationService {
     fun sendNotification(to: String, message: String)
 }
 
-class EmailService(private val notificationType: String) : NotificationService {
+class EmailService(private val notificationType: String, private val sender: String) : NotificationService {
     override fun sendNotification(to: String, message: String) {
-        Log.i(TAG, "Sending email to $to with message: $message and notification type: $notificationType")
+        Log.i(TAG, "Sending email to $to with message: $message and notification type: $notificationType and sender: $sender")
     }
 }
 

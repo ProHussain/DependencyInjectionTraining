@@ -2,6 +2,7 @@ package com.training.dependencyinjection
 
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Named
 
 @Component(modules = [UserRepositoryServiceModule::class, NotificationServiceModule::class])
 interface UserRegistrationServiceComponent {
@@ -9,6 +10,13 @@ interface UserRegistrationServiceComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance notificationType: String): UserRegistrationServiceComponent
+        fun create(
+            @BindsInstance
+            @Named("type")
+            notificationType: String,
+            @BindsInstance
+            @Named("sender")
+            notificationMessage: String
+        ): UserRegistrationServiceComponent
     }
 }
