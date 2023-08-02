@@ -18,16 +18,16 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
-     * Training 5
-     * 1. Difference between @Binds and @Provides
-     * 2. @Binds is more efficient than @Provides but How
-     * 3. @Binds is used for interface and abstract class
-     * 4. @Provides is used for concrete class
-     * 5. @Binds will use Dagger 2 to create object with @Inject constructor
-     * 6. @Provides will create a new object by User
-     * 7. How to Code:
-     * 7.1. Change Provides to Binds in Module
-     * 7.2. Change simple class to abstract class and abstract function
+     * Training 6
+     * 1. Let's we have a scenario where we need to use both services like send SMS and send Email
+     * 2. How can we use both services with Dagger2?
+     * 3. We can use @Named annotation to differentiate between two services
+     * 4. We can use @Named annotation in consumer and producer (Module) classes
+     * 5. But still there is a problem, we may face typo error while using @Named annotation in case of misspelling
+     * 6. So How can we solve this problem?
+     * 7. We can create our own custom annotation and add Dagger2 @Qualifier @Documented and @Retention annotation to it
+     * 8. We can use our custom annotation in consumer and producer (Module) classes
+     * 9. Let's run our app
      */
 
     @Inject

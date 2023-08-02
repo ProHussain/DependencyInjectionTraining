@@ -6,5 +6,9 @@ import dagger.Module
 @Module
 abstract class NotificationServiceModule {
     @Binds
-    abstract fun getNotificationService(emailService: EmailService): NotificationService
+    abstract fun getEmailService(emailService: EmailService): NotificationService
+
+    @SMSAnnotation
+    @Binds
+    abstract fun getSMSService(smsService: SMSService): NotificationService
 }
