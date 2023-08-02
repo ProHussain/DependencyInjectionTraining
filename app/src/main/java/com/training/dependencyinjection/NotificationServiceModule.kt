@@ -6,10 +6,10 @@ import dagger.Provides
 import javax.inject.Named
 
 @Module
-class NotificationServiceModule(private val notificationType: String) {
+class NotificationServiceModule() {
     @Named("email")
     @Provides
-    fun getEmailService(): NotificationService {
+    fun getEmailService(notificationType: String): NotificationService {
         return EmailService(notificationType)
     }
 
