@@ -3,6 +3,8 @@ package com.training.dependencyinjection
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.training.dependencyinjection.training_one.DaggerUserRegistrationServiceComponent
+import com.training.dependencyinjection.training_one.UserRegistrationService
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,24 +15,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        training2()
+        training3()
     }
 
     /**
-     * Training 2
-     * 1. Add Dagger 2 dependency
-     * 2. Create a component interface for UserRegistrationService
-     * 3. Add @Component annotation to the component interface
-     * 4. Add @Inject annotation to the constructor of UserRegistrationService, UserRepository, and EmailService
-     * 5. @Inject annotation is used to tell Dagger 2 that the class can be injected
-     * 6. We can get the instance of UserRegistrationService by calling DaggerUserRegistrationServiceComponent.builder().build().getUserRegistrationService()
-     * 7. Run the ap
-     */
+     * Training 3
+     * 1. Sometimes we need to create too many objects in the component interface
+     * 2. It's not efficient to create all of the objects in the component interface
+     * 3. We can use @Inject annotation for field injection to solve this problem
+     * 4. @Inject annotation to the constructor of UserRegistrationService, UserRepository, and EmailService tells Dagger 2 that how to create the object
+     * 5. @Inject annotation to the field of UserRegistrationService, UserRepository, and EmailService tells Dagger 2 that the object can be injected
+     * 6. We just need to pass our consumer class to the component interface
+     * 7. We can get the instance of UserRegistrationService by calling DaggerUserRegistrationServiceComponent.builder().build().inject(this)
+     * 8. Run the app
+    */
 
-    private fun training2() {
-        val component = DaggerUserRegistrationServiceComponent.builder().build()
-        val userRegistrationService = component.getUserRegistrationService()
-        userRegistrationService.registerUser("test2@mail.com", "123456")
+    @Inject
+    lateinit var userRegistrationService: UserRegistrationService
+
+    private fun training3() {
+    val component = DaggerUserRegistrationServiceComponent.builder().build()
+    component.bindMain(this)
+    userRegistrationService.registerUser("alpha@mail.com","12345678")
     }
 
 }
