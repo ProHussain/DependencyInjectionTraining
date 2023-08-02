@@ -3,9 +3,12 @@ package com.training.dependencyinjection
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
+import javax.inject.Singleton
+
 
 @Module
 class NotificationServiceModule() {
+    @Singleton
     @Named("email")
     @Provides
     fun getEmailService(
