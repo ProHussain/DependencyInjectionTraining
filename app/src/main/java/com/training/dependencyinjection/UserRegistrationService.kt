@@ -2,9 +2,8 @@ package com.training.dependencyinjection
 
 import javax.inject.Inject
 import javax.inject.Named
-import javax.inject.Singleton
 
-@Singleton
+@ApplicationScope
 class UserRegistrationService @Inject constructor(
     private var userRepositoryService: UserRepositoryService,
     @Named("email") private var notificationService: NotificationService

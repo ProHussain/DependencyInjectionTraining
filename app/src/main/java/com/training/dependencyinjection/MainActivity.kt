@@ -26,14 +26,16 @@ class MainActivity : AppCompatActivity() {
      * 5. We can use @Singleton annotation in our method anywhere we want to make it singleton
      * 6. But there is a problem, if we use @Singleton annotation it will make object singleton in the scope of the component only
      * 7. If our activity is destroyed, the object will be destroyed too and we will get a new object when we create the activity again
-     * 8. To solve this problem,
+     * 8. To solve this problem, we can create a custom scope
+     * 9. We can create a custom scope by using @Scope annotation and create object in application level
+     * 10. Let's check it.
      */
 
     @Inject
     lateinit var userRegistrationService: UserRegistrationService
 
     private fun training() {
-        val component = DaggerUserRegistrationServiceComponent.factory().create("Push","HashMac")
+        val component = (application as UserApplication).component
         component.bindMain(this)
         userRegistrationService.registerUser("alpha@mail.com","12345678")
     }

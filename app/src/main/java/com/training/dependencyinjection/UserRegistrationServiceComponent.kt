@@ -3,9 +3,8 @@ package com.training.dependencyinjection
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Named
-import javax.inject.Singleton
 
-@Singleton
+@ApplicationScope
 @Component(modules = [UserRepositoryServiceModule::class, NotificationServiceModule::class])
 interface UserRegistrationServiceComponent {
     fun bindMain(mainActivity: MainActivity)
