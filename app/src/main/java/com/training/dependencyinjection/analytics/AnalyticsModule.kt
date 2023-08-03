@@ -1,10 +1,13 @@
 package com.training.dependencyinjection.analytics
 
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
+import javax.inject.Named
 
 @Module
-abstract class AnalyticsModule() {
-    @Binds
-    abstract fun getAnalyticsService(firebaseAnalyticsService: FirebaseAnalyticsService): AnalyticsServices
+class AnalyticsModule() {
+    @Provides
+    fun getAnalyticsService(firebaseAnalyticsService: FirebaseAnalyticsService): AnalyticsServices {
+        return firebaseAnalyticsService
+    }
 }

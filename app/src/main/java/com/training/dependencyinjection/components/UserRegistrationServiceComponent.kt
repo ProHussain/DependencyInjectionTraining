@@ -6,18 +6,18 @@ import com.training.dependencyinjection.notification.NotificationServiceModule
 import com.training.dependencyinjection.registration.UserRepositoryServiceModule
 import dagger.BindsInstance
 import dagger.Component
+import dagger.Subcomponent
 
 @ActivityScope
-@Component(dependencies = [AppComponent::class], modules = [UserRepositoryServiceModule::class, NotificationServiceModule::class])
+@Subcomponent(modules = [UserRepositoryServiceModule::class, NotificationServiceModule::class])
 interface UserRegistrationServiceComponent {
     fun bindMain(mainActivity: MainActivity)
 
-    @Component.Factory
+    @Subcomponent.Factory
     interface Factory {
         fun create(
             @BindsInstance
-            notificationType: String,
-            appComponent: AppComponent
+            notificationType: String
         ): UserRegistrationServiceComponent
     }
 }

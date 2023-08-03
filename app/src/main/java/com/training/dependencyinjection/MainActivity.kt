@@ -2,7 +2,6 @@ package com.training.dependencyinjection
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.training.dependencyinjection.components.DaggerUserRegistrationServiceComponent
 import com.training.dependencyinjection.registration.UserRegistrationService
 import javax.inject.Inject
 
@@ -20,21 +19,21 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
-     * Training 8
-     * 1. Let's check a scenario: We have Registration and Notification Service, We need that services in particular activities or fragments not in All Application
-     * 2. Now we need to add some analytics services in our App. So we will create Analytics Service in Application Scope instead of Activity Scope
-     * 3. How can we do that? We need to create a new component for Application Scope and add Analytics Service in that component
-     * 4. Now we need to add that component in our Application class
-     * 5. But our Activity component is depend on Application component and we need to build a relationship between them
-     * 6. We can do that by adding Application component in Activity component
-     * 7. Let's Update our code
-     * 7.1. Create a new interface called AnalyticsService with a method called sendAnalyticsData and classes for sending data to different analytics services
-     * 7.2. Create a new module called AnalyticsModule and add two methods for binding FirebaseAnalyticsService and LocalyticsAnalyticsService
-     * 7.3. Create a new component called AppComponent and add AnalyticsModule in that component and add that component in Application class
-     * 7.4. Now we need to add AppComponent in ActivityComponent in Factory method
-     * 7.5. Now we access AnalyticsService in ActivityComponent and we can use it in our Activity
-     * 7.6. Add Singleton annotation in AnalyticsService
-     * 7.7. Add ActivityScope annotation in ActivityComponent
+     * Training 10
+     * 1. In our last training we have created a application level component and make a relation with Activity level component
+     * 2. We notice an issue of Binding missing in case define multiple analytics service in AnalyticsModule
+     * 3. With last training we need to define each object in Application level component to access in Activity level component
+     * 4. There is no way to access all objects without defining in Application level component
+     * 5. In this training we will learn how to access all objects without defining in Application level component and solve Binding missing issue
+     * 6. For this purpose we will use subcomponent in Dagger
+     * 7. Subcomponent is a component which is dependent on another component
+     * 8. In our case UserRegistrationServiceComponent is dependent on ApplicationComponent
+     * 9. Let's made changes in our code and check Results
+     * 9.1. Replace @Component with @Subcomponent annotation in UserRegistrationServiceComponent
+     * 9.2. In AppComponent add fun getUserRegistrationServiceComponent(): UserRegistrationServiceComponent.Factory as we build our UserRegistrationServiceComponent with Factory
+     * 9.3. If our Subcomponent does not use Factory then we can use fun getUserRegistrationServiceComponent(): UserRegistrationServiceComponent
+     * 9.4. Remove appComponent parameter from UserRegistrationServiceComponent.Factory.create() method
+     * 10. Our project build successfully and we can see our logs in Logcat
      */
 
     @Inject
@@ -42,8 +41,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun training() {
         val appComponent = (application as MyApplication).component
-        val component = DaggerUserRegistrationServiceComponent.factory().create("PopUp",appComponent)
-        component.bindMain(this)
+        val userRegistrationServiceComponent = appComponent.getUserRegistrationServiceComponentFactory().create("email")
+        userRegistrationServiceComponent.bindMain(this)
         userRegistrationService.registerUser("alpha@mail.com","12345678")
     }
 
