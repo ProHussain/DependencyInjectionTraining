@@ -1,4 +1,4 @@
-package com.training.dependencyinjection
+package com.training.dependencyinjection.annotations
 
 import javax.inject.Qualifier
 

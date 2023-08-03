@@ -1,4 +1,4 @@
-package com.training.dependencyinjection
+package com.training.dependencyinjection.registration
 
 import dagger.Binds
 import dagger.Module

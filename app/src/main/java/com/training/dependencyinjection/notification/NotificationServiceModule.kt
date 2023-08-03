@@ -1,5 +1,6 @@
-package com.training.dependencyinjection
+package com.training.dependencyinjection.notification
 
+import com.training.dependencyinjection.annotations.SMSAnnotation
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -7,14 +8,12 @@ import javax.inject.Named
 
 @Module
 class NotificationServiceModule() {
-    @ApplicationScope
     @Named("email")
     @Provides
     fun getEmailService(
-        @Named("type") notificationType: String,
-        @Named("sender") sender: String
+        notificationType: String
     ): NotificationService {
-        return EmailService(notificationType,sender)
+        return EmailService(notificationType)
     }
 
     @SMSAnnotation
