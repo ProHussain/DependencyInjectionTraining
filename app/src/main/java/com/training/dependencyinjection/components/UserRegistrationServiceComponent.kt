@@ -13,11 +13,9 @@ import dagger.Subcomponent
 interface UserRegistrationServiceComponent {
     fun bindMain(mainActivity: MainActivity)
 
-    @Subcomponent.Factory
-    interface Factory {
-        fun create(
-            @BindsInstance
-            notificationType: String
-        ): UserRegistrationServiceComponent
+    @Subcomponent.Builder
+    interface Builder {
+        fun build(): UserRegistrationServiceComponent
+        fun notificationType(@BindsInstance notificationType: String): Builder
     }
 }

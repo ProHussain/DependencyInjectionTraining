@@ -19,21 +19,22 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
-     * Training 10
-     * 1. In our last training we have created a application level component and make a relation with Activity level component
-     * 2. We notice an issue of Binding missing in case define multiple analytics service in AnalyticsModule
-     * 3. With last training we need to define each object in Application level component to access in Activity level component
-     * 4. There is no way to access all objects without defining in Application level component
-     * 5. In this training we will learn how to access all objects without defining in Application level component and solve Binding missing issue
-     * 6. For this purpose we will use subcomponent in Dagger
-     * 7. Subcomponent is a component which is dependent on another component
-     * 8. In our case UserRegistrationServiceComponent is dependent on ApplicationComponent
-     * 9. Let's made changes in our code and check Results
-     * 9.1. Replace @Component with @Subcomponent annotation in UserRegistrationServiceComponent
-     * 9.2. In AppComponent add fun getUserRegistrationServiceComponent(): UserRegistrationServiceComponent.Factory as we build our UserRegistrationServiceComponent with Factory
-     * 9.3. If our Subcomponent does not use Factory then we can use fun getUserRegistrationServiceComponent(): UserRegistrationServiceComponent
-     * 9.4. Remove appComponent parameter from UserRegistrationServiceComponent.Factory.create() method
-     * 10. Our project build successfully and we can see our logs in Logcat
+     * Training 11
+     * 1. In this training we will learn how to use @Builder annotation to create a component
+     * 2. We will create a component using @Builder annotation
+     * 3. But before that we need to know what's the difference between @Component.Factory and @Component.Builder
+     * 3.1. @Component.Factory is used to create a component with a single parameter and @Component.Builder is used to create a component with multiple parameters
+     * 3.2. If we don't pass any parameter to the Factory method then we face an error on Compilation time but if we don't pass any parameter to the Builder method then we face an error on Runtime
+     * 3.3. Factory method is a modern way to create a component and Builder method is an old way to create a component so I suggest you to use Factory method
+     * 4. This training is only to cover old way of creating a component using @Builder annotation for old projects
+     * 5. Let's create a component using @Builder annotation and made changes in AppComponent.kt, UserRegistrationServiceComponent.kt
+     * 5.1. Replace Factory with Builder in UserRegistrationServiceComponent.kt
+     * 5.2. Add build method that returns UserRegistrationServiceComponent in UserRegistrationServiceComponent.kt
+     * 5.3. Add notificationType method that takes notificationType as a parameter and returns Builder in UserRegistrationServiceComponent.kt
+     * 5.4. We will return Builder in all other methods if we want to add more methods in future
+     * 5.5. In AppComponent.kt, we will add getUserRegistrationServiceComponentBuilder method that returns UserRegistrationServiceComponent.Builder
+     * 5.6. In MainActivity.kt, we will create a component using getUserRegistrationServiceComponentBuilder method and pass notificationType as a parameter and build it
+     * 6. Let's run the app and check the logcat
      */
 
     @Inject
@@ -41,7 +42,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun training() {
         val appComponent = (application as MyApplication).component
-        val userRegistrationServiceComponent = appComponent.getUserRegistrationServiceComponentFactory().create("email")
+        val userRegistrationServiceComponent = appComponent.getUserRegistrationServiceComponentBuilder()
+            .notificationType("email")
+            .build()
         userRegistrationServiceComponent.bindMain(this)
         userRegistrationService.registerUser("alpha@mail.com","12345678")
     }
